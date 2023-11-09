@@ -1,0 +1,2 @@
+spacy
+es-core-news-sm
