@@ -1,3 +1,11 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import warnings
+
+import json
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 def data_mitula_geo(mun,pags):
 
   df_full=pd.DataFrame()
