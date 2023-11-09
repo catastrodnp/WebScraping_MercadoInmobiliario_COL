@@ -81,7 +81,7 @@ def data_mitula(mun,pags):
         # Concatenar las nuevas columnas al DataFrame original
         df_full = pd.concat([df_full, facilities_columns], axis=1)
 
-        df = df.loc[:, ~df.columns.duplicated()]
+        df_full = df_full.loc[:, ~df_full.columns.duplicated()]
         
         # Reemplazar NaN con 0 en las nuevas columnas
         df_full = df_full.fillna(0)
