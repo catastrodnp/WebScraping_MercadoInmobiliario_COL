@@ -76,15 +76,12 @@ def data_mitula(mun,pags):
         
         df_full['Facilities']=df_full['Facilities'].astype(str).str.replace("'","").str.replace("[","").str.replace("]","").str.replace(" ,",",").str.replace(", ",",")
         # Dividir la columna 'amenities' en elementos individuales y crear columnas correspondientes
-        facilities_columns = df_full['Facilities'].str.get_dummies(',')
-
-        
-        # Eliminar columnas duplicadas (si existen)
-        facilities_columns = facilities_columns.loc[:, ~facilities_columns.columns.duplicated()]
-        
+        facilities_columns = df_full['Facilities'].str.get_dummies(',')        
         
         # Concatenar las nuevas columnas al DataFrame original
         df_full = pd.concat([df_full, facilities_columns], axis=1)
+
+        df = df.loc[:, ~df.columns.duplicated()]
         
         # Reemplazar NaN con 0 en las nuevas columnas
         df_full = df_full.fillna(0)
