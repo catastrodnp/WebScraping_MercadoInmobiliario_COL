@@ -80,7 +80,7 @@ def data_mitula(mun,pags):
 
         
         # Eliminar columnas duplicadas (si existen)
-        amenities_columns = amenities_columns.loc[:, ~amenities_columns.columns.duplicated()]
+        facilities_columns = facilities_columns.loc[:, ~facilities_columns.columns.duplicated()]
         
         
         # Concatenar las nuevas columnas al DataFrame original
