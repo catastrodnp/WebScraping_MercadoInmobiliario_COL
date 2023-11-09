@@ -82,6 +82,9 @@ def data_mitula(mun,pags):
         df_full = pd.concat([df_full, facilities_columns], axis=1)
 
         df_full = df_full.loc[:, ~df_full.columns.duplicated(keep='last')]
+
+        #Eliminar duplicados
+        df_full = df_full.drop_duplicates(subset=['Título', 'Precio', 'Área (m²)'], keep='first')
         
         # Reemplazar NaN con 0 en las nuevas columnas
         df_full = df_full.fillna(0)
