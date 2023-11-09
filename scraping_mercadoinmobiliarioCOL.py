@@ -1,4 +1,76 @@
+def data_mitula_geo(mun,pags):
 
+  df_full=pd.DataFrame()
+
+  for mun in muns:
+
+    titulos = []
+    descripciones = []
+    precios = []
+    areas = []
+    num_banos = []
+    num_habitaciones = []
+    ubicaciones = []
+    fechas_publicacion = []
+    facilities_list = []
+
+
+    for pag in range(1,pags):
+      url=f'https://casas.mitula.com.co/searchRE/orden-0/op-1/q-{mun}/pag-{pag}?req_sgmt=REVTS1RPUDtVU0VSX1NFQVJDSDtTRVJQOw=='
+
+
+      response = requests.get(url)
+      print(response)
+      soup = BeautifulSoup(response.text, "html.parser")
+
+      viviendas = soup.find_all('div', {'class': 'listing-card'})
+
+
+      print(len(viviendas))
+      #print(viviendas)
+      # Iterar a través de las viviendas
+      for vivienda in viviendas:
+        try:
+          #print(vivienda)
+          titulo = vivienda.find('div', {'class': 'listing-card__title'}).text.strip()
+          precio = vivienda.find('div', {'class': 'price'}).text.strip()
+          #print(precio)
+          area = vivienda.find('div', {'class': 'card-icon__area'}).find_next('span').text.strip()
+          bano = str(vivienda.find('span', {'data-test': 'bathrooms'})).split('data-test="bathrooms">')[-1].replace('</span>','')
+          hab = str(vivienda.find('span', {'data-test': 'bedrooms'})).split('data-test="bedrooms">')[-1].replace('</span>','')
+          ubicacion = vivienda.find('div', {'class': 'listing-card__location'}).text.strip()
+          fecha_publicacion = vivienda.find('span', {'class': 'published-date'}).text.strip()
+          facilities = sorted(list(set([item.text.strip() for item in vivienda.find_all('span', {'class': 'facility-item__text'})])))
+          #print(titulo,precio,area,bano)
+
+
+          titulos.append(titulo)
+          precios.append(precio)
+          areas.append(area)
+          num_banos.append(bano)
+          num_habitaciones.append(hab)
+          ubicaciones.append(ubicacion)
+          fechas_publicacion.append(fecha_publicacion)
+          facilities_list.append(facilities)
+
+          data = {'Título': titulos,
+                  'Precio': precios,
+                  'Área (m²)': areas,
+                  'Número de Baños': num_banos,
+                  'Número de Habitaciones': num_habitaciones,
+                  'Ubicación': ubicaciones,
+                  'Fecha de Publicación': fechas_publicacion,
+                  'Facilities': facilities_list
+                  }
+
+          df=pd.DataFrame(data)
+          #display(df)
+          df_full=df_full.append(df,ignore_index=True)
+
+        except:
+          pass
+
+  return df_full
 
 def data_mitula_geo(mun,pag):
   url=f'https://casas.mitula.com.co/searchRE/orden-0/op-1/q-{mun}/pag-{pag}?req_sgmt=REVTS1RPUDtVU0VSX1NFQVJDSDtTRVJQOw=='
