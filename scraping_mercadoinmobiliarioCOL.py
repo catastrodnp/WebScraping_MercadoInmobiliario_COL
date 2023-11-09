@@ -6,7 +6,7 @@ import warnings
 import json
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-def data_mitula_geo(mun,pags):
+def data_mitula(mun,pags):
 
   df_full=pd.DataFrame()
 
