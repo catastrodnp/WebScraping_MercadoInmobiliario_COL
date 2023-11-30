@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def lugares_cercanos(col):
+def lugares_cercanos(col,df):
   lugares = ['polic', 'hospital', 'centro comercial', 'restaurante','colegio',
                      'universidad','banco','supermercado','parque','transmilenio','cajero',
                      'iglesia','cicloruta','lavander']
